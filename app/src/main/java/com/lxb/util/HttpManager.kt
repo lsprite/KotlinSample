@@ -4,7 +4,6 @@ package com.lxb.util
  * Created by Administrator on 2017/5/19.
  */
 
-import android.util.Log
 import org.apache.http.HttpVersion
 import org.apache.http.NameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
@@ -23,7 +22,6 @@ import java.util.*
 
 object HttpManager {
 
-    var IS_DEBUG = true
 
     fun posturl(nameValuePairs: ArrayList<NameValuePair>,
                 url: String): String {
@@ -41,14 +39,10 @@ object HttpManager {
                 } else {
                     logString += nameValuePair.name + "=" + nameValuePair.value + "&"
                 }
-                if (IS_DEBUG) {
-                    System.err.println(nameValuePair.name + "="
-                            + nameValuePair.value)
-                }
+                LogUtil.log(nameValuePair.name + "="
+                        + nameValuePair.value)
             }
-            if (IS_DEBUG) {
-                Log.w("HttpManager", "HttpManager Post:" + logString)
-            }
+            LogUtil.log("HttpManager", "HttpManager Post:" + logString)
             val response = httpclient.execute(httppost)
             val entity = response.entity
             `is` = entity.content
@@ -93,7 +87,7 @@ object HttpManager {
             for ((key, value) in params) {
                 val strBody = StringBody(value)
                 mEntity.addPart(key, strBody)
-                System.err.println(key + "=" + value)
+                LogUtil.log(key + "=" + value)
             }
             // 添加上传的文件
             val iterator = filesMap.keys.iterator()
@@ -101,7 +95,7 @@ object HttpManager {
                 val fileName = iterator.next()
                 val cBody = FileBody(filesMap[fileName])
                 mEntity.addPart(fileName, cBody)
-                System.err.println("while-----iterator fileName:" + fileName
+                LogUtil.log("while-----iterator fileName:" + fileName
                         + "  file:" + filesMap[fileName])
             }
             httpRequest.entity = mEntity

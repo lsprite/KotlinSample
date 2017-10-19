@@ -1,15 +1,18 @@
 package com.lxb.kotlinsample.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.alibaba.fastjson.JSON
 import com.lxb.kotlinsample.R
 import com.lxb.kotlinsample.adapter.CkAdapter
 import com.lxb.kotlinsample.adapter.MainAdapter
 import com.lxb.kotlinsample.bean.AdBean
 import com.lxb.kotlinsample.bean.CkBean
+import com.lxb.kotlinsample.bean.UserBean
 import com.lxb.util.HttpManager
 import com.lxb.util.PhoneInfo
 import com.lxb.util.SyLinearLayoutManager
@@ -43,7 +46,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //
-        btn.setOnClickListener { toast("1111") }
+        var res = "{\"id\": 100,\"userName\": \"Mike\",\"mobile\": \"00000000000\"}";
+        var ub = JSON.parseObject(res,
+                UserBean::class.java)
+        btn.setOnClickListener {
+            var intent: Intent = Intent(MainActivity@ this, SecondActivity::class.java)
+            intent.putExtra("ub", ub)
+            startActivity(intent)
+        }
         //
         tv.text = "Kotlin Sample"
         getinfo()
@@ -88,6 +98,7 @@ class MainActivity : BaseActivity() {
         })
         println(PhoneInfo.getVersionName(this))
     }
+
 
     fun getinfo() {
         if (pool == null) {
