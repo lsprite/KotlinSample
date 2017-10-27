@@ -7,6 +7,7 @@ import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.alibaba.fastjson.JSON
+import com.lxb.kotlinsample.MyApplication
 import com.lxb.kotlinsample.R
 import com.lxb.kotlinsample.adapter.CkAdapter
 import com.lxb.kotlinsample.adapter.MainAdapter
@@ -46,6 +47,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //
+        println(MyApplication.instance().lat)
+        //
         var res = "{\"id\": 100,\"userName\": \"Mike\",\"mobile\": \"00000000000\"}";
         var ub = JSON.parseObject(res,
                 UserBean::class.java)
@@ -60,6 +63,8 @@ class MainActivity : BaseActivity() {
         var bean: AdBean = AdBean()
         bean.id = "1"
         bean.id = "2"
+        bean.id = "3"
+        bean.id = "4"
         bean.url = "http://www.baidu.com"
         toast("Kotlin")
         //===listview

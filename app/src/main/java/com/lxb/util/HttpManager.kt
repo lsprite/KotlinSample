@@ -22,7 +22,7 @@ import java.util.*
 
 object HttpManager {
 
-
+    @JvmStatic
     fun posturl(nameValuePairs: ArrayList<NameValuePair>,
                 url: String): String {
         var tmp = ""
@@ -73,6 +73,7 @@ object HttpManager {
         return tmp
     }
 
+    @JvmStatic
     fun uploadFiles(url: String,
                     params: Map<String, String>, filesMap: Map<String, File>): String {
         var tmp = ""
