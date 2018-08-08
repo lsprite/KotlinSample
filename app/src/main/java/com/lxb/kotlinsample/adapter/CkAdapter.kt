@@ -9,9 +9,9 @@ import com.lxb.kotlinsample.R
 import com.lxb.kotlinsample.bean.CkBean
 import java.util.*
 
-class CkAdapter constructor(context: Context?) : RecyclerView.Adapter<CkAdapter.ViewHolder>() {
-    var datas: ArrayList<CkBean>? = ArrayList()
-    private var context: Context? = null
+class CkAdapter constructor(context: Context) : RecyclerView.Adapter<CkAdapter.ViewHolder>() {
+    var datas: ArrayList<CkBean> = ArrayList()
+    lateinit var context: Context
 
     init {
         this.context = context
@@ -32,19 +32,19 @@ class CkAdapter constructor(context: Context?) : RecyclerView.Adapter<CkAdapter.
      * 设置值
      */
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.tv!!.text = datas!![i].userName
+        viewHolder.tv.text = datas[i].userName
         if (mOnItemClickLitener != null) {
             viewHolder.itemView.setOnClickListener {
-                mOnItemClickLitener!!.onItemClick(viewHolder.itemView, i)
+                mOnItemClickLitener.onItemClick(viewHolder.itemView, i)
             }
         }
     }
 
     inner class ViewHolder(arg0: View) : RecyclerView.ViewHolder(arg0) {
-        var tv: TextView? = null
+        lateinit var tv: TextView
     }
 
-    fun setdatas(datas: ArrayList<CkBean>?) {
+    fun setdatas(datas: ArrayList<CkBean>) {
         if (datas != null) {
             this.datas = datas.clone() as ArrayList<CkBean>
             notifyDataSetChanged()
@@ -53,7 +53,7 @@ class CkAdapter constructor(context: Context?) : RecyclerView.Adapter<CkAdapter.
 
     override fun getItemCount(): Int {
         // TODO Auto-generated method stub
-        return if (datas == null) 0 else datas!!.size
+        return if (datas == null) 0 else datas.size
     }
 
     /**
@@ -65,9 +65,9 @@ class CkAdapter constructor(context: Context?) : RecyclerView.Adapter<CkAdapter.
         fun onItemClick(view: View, position: Int)
     }
 
-    private var mOnItemClickLitener: OnItemClickLitener? = null
+    lateinit var mOnItemClickLitener: OnItemClickLitener
 
-    fun setOnItemClickLitener(mOnItemClickLitener: OnItemClickLitener?) {
+    fun setOnItemClickLitener(mOnItemClickLitener: OnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener
     }
 }

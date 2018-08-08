@@ -6,7 +6,8 @@ import android.util.Log
 object LogUtil {
     val LOG = true
     val TAG = "NEMO"
-    fun log(tag: String, msg: String?) {
+    @JvmStatic
+    fun log(tag: String, msg: String) {
         var msg = msg
         if (msg == null)
             msg = "null"
@@ -15,7 +16,8 @@ object LogUtil {
         }
     }
 
-    fun log(msg: String?) {
+    @JvmStatic
+    fun log(msg: String) {
         var msg = msg
         if (msg == null)
             msg = "null"

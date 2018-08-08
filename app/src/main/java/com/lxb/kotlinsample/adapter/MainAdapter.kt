@@ -13,9 +13,9 @@ import java.util.*
  * Created by Administrator on 2017/5/26.
  */
 
-class MainAdapter constructor(context: Context?) : BaseAdapter() {
-    private var datas: ArrayList<CkBean>? = ArrayList()
-    private var context: Context? = null
+class MainAdapter constructor(context: Context) : BaseAdapter() {
+    var datas: ArrayList<CkBean> = ArrayList()
+    lateinit var context: Context
 
     init {
         this.context = context
@@ -23,12 +23,12 @@ class MainAdapter constructor(context: Context?) : BaseAdapter() {
 
     override fun getCount(): Int {
         // TODO Auto-generated method stub
-        return if (datas == null) 0 else datas!!.size
+        return if (datas == null) 0 else datas.size
     }
 
     override fun getItem(paramInt: Int): Any {
         // TODO Auto-generated method stub
-        return datas!![paramInt]
+        return datas[paramInt]
     }
 
     override fun getItemId(paramInt: Int): Long {
@@ -36,33 +36,34 @@ class MainAdapter constructor(context: Context?) : BaseAdapter() {
         return 0
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         // TODO Auto-generated method stub
-        var v: View? = null
+        var v: View
         try {
             if (convertView != null) {
                 v = convertView
             } else {
                 v = View.inflate(context, R.layout.item_main, null)
                 val ic = ItemControls()
-                ic.tv = v!!.findViewById(R.id.tv) as TextView//
+                ic.tv = v.findViewById(R.id.tv) as TextView//
                 v.tag = ic
             }
-            val ic = v!!.tag as ItemControls
-            ic.tv!!.text = datas!!.get(position).userName
+            val ic = v.tag as ItemControls
+            ic.tv.text = datas.get(position).userName
         } catch (e: Exception) {
             // TODO: handle exception
             e.printStackTrace()
+            v = View.inflate(context, R.layout.item_main, null)
         }
 
         return v
     }
 
     internal inner class ItemControls {
-        var tv: TextView? = null
+        lateinit var tv: TextView
     }
 
-    fun setList(datas: ArrayList<CkBean>?) {
+    fun setList(datas: ArrayList<CkBean>) {
         if (datas != null) {
             this.datas = datas.clone() as ArrayList<CkBean>
             notifyDataSetChanged()
